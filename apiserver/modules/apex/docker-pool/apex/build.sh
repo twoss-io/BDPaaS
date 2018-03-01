@@ -5,7 +5,7 @@
 #
 
 worker_nodes=( bdp-wnode1 bdp-wnode2 bdp-wnode3 )
-apex_sandbox_image=apacheapex/sandbox2:v0.1.2
+apex_sandbox_image=apexsandbox2:v0.1.2
 
 helper()
 {
@@ -55,7 +55,7 @@ echo ""
 
 # check image
 docker images | grep sandbox2 >/dev/null 2>&1
-[[ $? != 0 ]] && echo -e "\n[ERR] apacheapex/sandbox2 container image does not exist!\n" && exit 1
+[[ $? != 0 ]] && echo -e "\n[ERR] apex container image does not exist!\n" && exit 1
 
 if [[ $1 != 1 ]]; then
 	# done & exit
