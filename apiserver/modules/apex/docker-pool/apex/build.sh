@@ -4,15 +4,16 @@
 #
 #
 
-worker_nodes=( kubes1 kubes2 )
+worker_nodes=( bdp-wnode1 bdp-wnode2 bdp-wnode3 )
 apex_sandbox_image=apacheapex/sandbox2:v0.1.2
 
 helper()
 {
     echo -e ""
     echo -e "Usage: $1 [0]"
-    echo -e "\twith \"0\" option, docker image ${apex_sandbox_image} will be removed from master and workers"
-    echo -e "\totherwise, ${apex_sandbox_image} will be built in master and distributed to every worker"
+    echo -e "\twith \"0\" option, docker image ${apex_sandbox_image} will be removed from worker nodes"
+    echo -e "\twith \"1\" option, docker image ${apex_sandbox_image} will be built and distributed to every worker node"
+    echo -e "\totherwise, ${apex_sandbox_image} will be built"
     echo -e ""
 }
 
@@ -55,6 +56,12 @@ echo ""
 # check image
 docker images | grep sandbox2 >/dev/null 2>&1
 [[ $? != 0 ]] && echo -e "\n[ERR] apacheapex/sandbox2 container image does not exist!\n" && exit 1
+
+if [[ $1 != 1 ]]; then
+	# done & exit
+	echo -e "\n-- done --\n"
+	exit 0
+fi
 
 # distribute image to worker nodes
 n=${#worker_nodes[@]}
