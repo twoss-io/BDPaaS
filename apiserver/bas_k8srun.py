@@ -132,7 +132,7 @@ def main(dataj):
       # query urls
       try: 
         urls = subprocess.check_output(k8s_qurlcommand, stderr=subprocess.STDOUT, shell=True)
-        print '\nQuery Spark service URLs:\n   %s\n' % (urls)
+        print '\nQuery service URLs:\n   %s\n' % (urls)
       except subprocess.CalledProcessError as e:
         print "   [ERR-k8srun] query URLs error: ", e.returncode, '\n---\n', e.output
         return_to_apm_server('', 'false')

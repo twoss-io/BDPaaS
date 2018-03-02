@@ -253,7 +253,7 @@ k8s_server_eth0=$3
 # check if apacheapex/sandbox2 image exists
 if [[ "${cmd}" = "start" ]]; then
 	docker images | grep sandbox2 >/dev/null 2>&1
-	[[ $? != 0 ]] && echo -e "\n[ERR] apacheapex/sandbox2 container image does not exist!\n" && exit 1
+	[[ $? != 0 ]] && echo -e "\n[ERR] apex container image does not exist!\n" && exit 1
 fi
 
 case "${cmd}" in
