@@ -11,6 +11,7 @@ webView.constants.apexConsolePage={};
 webView.cls.apexConsolePage.MAIN_FRAME = "common_mainFrame";
 webView.cls.apexConsolePage.CONTENT_FRAME = "apexConsolePage_contentFrame";
 webView.cls.apexConsolePage.CONTENT_TOOL_FRAME = "bigDataPage_content_toolFrame";
+webView.cls.apexConsolePage.CONTENT_TOOL_TITLE = "bigDataPage_content_toolTitle";
 webView.cls.apexConsolePage.CONTENT_I_FRAME = "bigDataPage_content_iFrame";
 
 webView.cls.apexConsolePage.ACTION_BUTTON_FRAME = "bigDataPage_actionButtonFrame";

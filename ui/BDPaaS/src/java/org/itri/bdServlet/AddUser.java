@@ -114,15 +114,15 @@ public class AddUser extends HttpServlet {
                         HashMap<String, Integer> projectNameList = new HashMap<String, Integer>();
                         for(int i=0; i<targetApexProjectList.length(); i++){
                             JSONObject currentProject = targetApexProjectList.getJSONObject(i);
-                            String proejctName = "bdpaas-" + targetUserID + "-" + currentProject.getString(Key.PROJECT_NAME);
+                            String proejctName = "bdpaas##" + targetUserID + "##" + currentProject.getString(Key.PROJECT_NAME);
                             DebugLog.info("apex: " + proejctName);
                             if(projectNameList.get(proejctName)==null){
-                                proejctName = proejctName + "-1";
+                                proejctName = proejctName + "##1";
                                 projectNameList.put(proejctName, 1);
                             }
                             else{
                                 int currentIndex = projectNameList.get(proejctName) + 1;
-                                proejctName = proejctName + "-" + currentIndex;
+                                proejctName = proejctName + "##" + currentIndex;
                                 projectNameList.put(proejctName, currentIndex);
                             }
                             JSONObject createdProjectObject = new JSONObject();
@@ -147,15 +147,15 @@ public class AddUser extends HttpServlet {
                         }
                         for(int i=0; i<targetSparkProjectList.length(); i++){
                             JSONObject currentProject = targetSparkProjectList.getJSONObject(i);
-                            String proejctName = "bdpaas-" + targetUserID + "-" + currentProject.getString(Key.PROJECT_NAME);
+                            String proejctName = "bdpaas##" + targetUserID + "##" + currentProject.getString(Key.PROJECT_NAME);
                             DebugLog.info("spark: " + proejctName);
                             if(projectNameList.get(proejctName)==null){
-                                proejctName = proejctName + "-1";
+                                proejctName = proejctName + "##1";
                                 projectNameList.put(proejctName, 1);
                             }
                             else{
                                 int currentIndex = projectNameList.get(proejctName) + 1;
-                                proejctName = proejctName + "-" + currentIndex;
+                                proejctName = proejctName + "##" + currentIndex;
                                 projectNameList.put(proejctName, currentIndex);
                             }
                             JSONObject createdProjectObject = new JSONObject();

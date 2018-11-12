@@ -79,8 +79,8 @@ public class AddUserPlatform extends HttpServlet {
             String targetProjectName = request.getParameter(Key.PROJECT_NAME);
             String targetModule = request.getParameter(Key.MODULE);
             String targetURL = request.getParameter(Key.URL);
-            if(targetModule.matches("k8sDashboard")) targetProjectName = "bdpaas-" + targetUserID;
-            else if(targetModule.matches("grafana")) targetProjectName = "bdpaas-" + targetUserID;
+            if(targetModule.matches("k8sDashboard")) targetProjectName = "bdpaas##" + targetUserID;
+            else if(targetModule.matches("grafana")) targetProjectName = "bdpaas##" + targetUserID;
             
             UserDBManager userDBManager = new UserDBManager();
             PlatformDBManager platformDBManager = new PlatformDBManager();

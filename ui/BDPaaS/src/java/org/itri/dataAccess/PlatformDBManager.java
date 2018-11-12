@@ -179,7 +179,7 @@ public class PlatformDBManager {
         ArrayList<Platform> result = new ArrayList<Platform>();
         try{
             myStatement = myConnect.prepareStatement("SELECT * FROM " + Table.TEMP_PLATFORM + " WHERE " + Column.USER_ID + "=?");  
-            DebugLog.info("SELECT * FROM " + Table.PLATFORM + " WHERE " + Column.USER_ID + "=" + userID);
+            DebugLog.info("SELECT * FROM " + Table.TEMP_PLATFORM + " WHERE " + Column.USER_ID + "=" + userID);
             myStatement.setString(1, userID);
             myResultSet = myStatement.executeQuery();
             while (myResultSet.next()) {
@@ -252,7 +252,7 @@ public class PlatformDBManager {
         ResultSet myResultSet = null;
         boolean result = false;
         try{
-            DebugLog.info("addTempPlatform");
+            DebugLog.info("addTempPlatform " + projectName);
             myStatement = myConnect.prepareStatement(" INSERT INTO " + Table.TEMP_PLATFORM + " (" + Column.ID + "," + Column.USER_ID + "," + Column.PLATFORM_TYPE + ","
                     + Column.PLATFORM_URL + "," + Column.PROJECT_NAME + ") VALUES (NULL,?,?,?, ?)", Statement.RETURN_GENERATED_KEYS);            
             int updateRow = 0; 

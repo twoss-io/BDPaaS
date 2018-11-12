@@ -11,6 +11,7 @@ webView.constants.dashboardPage={};
 webView.cls.dashboardPage.MAIN_FRAME = "common_mainFrame";
 webView.cls.dashboardPage.CONTENT_FRAME = "dashboardPage_contentFrame";
 webView.cls.dashboardPage.CONTENT_TOOL_FRAME = "bigDataPage_content_toolFrame";
+webView.cls.dashboardPage.CONTENT_TOOL_TITLE = "bigDataPage_content_toolTitle";
 webView.cls.dashboardPage.CONTENT_I_FRAME = "bigDataPage_content_iFrame";
 
 webView.cls.dashboardPage.ACTION_BUTTON_FRAME = "bigDataPage_actionButtonFrame";

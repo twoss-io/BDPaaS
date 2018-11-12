@@ -81,6 +81,7 @@ public class UpdatePlatform extends HttpServlet {
             String userID = inputJSON.getString(Key.USER);
             JSONObject projectObject = inputJSON.getJSONObject(Key.PROJECT);
             String projectName = projectObject.getString(Key.NAME);
+            projectName = projectName.replaceAll("-", "##");
             String module = projectObject.getString(Key.MODULE);
             JSONObject returnObject = projectObject.getJSONObject(Key.RETURN);
             String returnResult = returnObject.getString(Key.RESULT);
@@ -152,7 +153,7 @@ public class UpdatePlatform extends HttpServlet {
                     }
                     if(urlsObject.has(Key.K8S_DASHBOARD)){
                         String inputURL = urlsObject.getString(Key.K8S_DASHBOARD);
-                        projectName = "bdpaas-" + userID;
+                        projectName = "bdpaas##" + userID;
                         platformDBManager.deleteTempPlatform(userID, projectName, Key.K8S_DASHBOARD);
                         if(platformDBManager.hasPlatform(userID, projectName, Key.K8S_DASHBOARD)) 
                             platformDBManager.editPlatform(userID, projectName, Key.K8S_DASHBOARD, inputURL);
@@ -161,7 +162,7 @@ public class UpdatePlatform extends HttpServlet {
                     }
                     if(urlsObject.has(Key.GRAFANA)){
                         String inputURL = urlsObject.getString(Key.GRAFANA);
-                        projectName = "bdpaas-" + userID;
+                        projectName = "bdpaas##" + userID;
                         platformDBManager.deleteTempPlatform(userID, projectName, Key.GRAFANA);
                         if(platformDBManager.hasPlatform(userID, projectName, Key.GRAFANA)) 
                             platformDBManager.editPlatform(userID, projectName, Key.GRAFANA, inputURL);
@@ -180,11 +181,11 @@ public class UpdatePlatform extends HttpServlet {
                         platformDBManager.deletePlatform(userID, projectName, Key.YARN);
                     }
                     else if(module.matches(Key.K8S_DASHBOARD)){
-                        projectName = "bdpaas-" + userID;
+                        projectName = "bdpaas##" + userID;
                         platformDBManager.deletePlatform(userID, projectName, Key.K8S_DASHBOARD);
                     }
                     else if(module.matches(Key.GRAFANA)){
-                        projectName = "bdpaas-" + userID;
+                        projectName = "bdpaas##" + userID;
                         platformDBManager.deletePlatform(userID, projectName, Key.GRAFANA);
                     }
                 }

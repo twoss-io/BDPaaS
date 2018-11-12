@@ -95,6 +95,7 @@ mainPage.prototype.drawTopBannerItems=function(Jdata){
     }
     this.bigDataItem = this.addBigDataItem(Jdata.platform);
     this.addLogoutButton();
+    this.addUserTag();
     //this.monitorItem = this.addMonitorItem();
     if(webView.variables.authority == 0){
         this.userItem = this.addUserItem();
@@ -210,7 +211,7 @@ mainPage.prototype.addBigDataItem=function(platformList){
     }
     var bigDataItem = this.topBannerCTRLer.addItem({
         iconURL: jLego.func.getImgPath({folder: "webView/img/topBanner/", name: "connectWhite", type: "png"}),
-        name: "Big Data",
+        name: "BDPaaS Project",
         key: "bigData",
         selected: false
     }, onCallbackObject, offCallbackObject);
@@ -246,7 +247,11 @@ mainPage.prototype.addUserItem=function(){
     return newItem;
 }
 
-
+mainPage.prototype.addUserTag = function(){
+    var userTag = 
+            jLego.basicUI.addDiv(this.topBannerFrame, {class: this.myClass.USER_TAG});
+    $(userTag).text(webView.variables.currentUser);
+}
 mainPage.prototype.addLogoutButton=function(){
     var logoutButton =
             this.buttonCTRLer.addFreeSingleButton(this.topBannerFrame, {type: "transparent", float: 'right', top: 0, right: 10, title: "Logout", iconURL: jLego.func.getImgPath({folder: "webView/img/button", name: "exitWhite", type: "png"})});

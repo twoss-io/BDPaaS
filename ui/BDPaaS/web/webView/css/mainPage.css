@@ -25,3 +25,18 @@ and open the template in the editor.
     position: absolute;
 }
 
+.mainPage_userTag{
+    position: relative;
+    float: right;
+    width: auto;
+    height: 22px;
+    line-height: 22px;
+    color: white;
+    background-color: rgb(134, 145, 150);
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 3px;
+    border-radius: 12px;
+    font-size: 14px;
+    margin-right: 6px;
+}

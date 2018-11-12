@@ -68,6 +68,7 @@
         %>
         <script>
             webView.variables.authority = '<%=authority%>';
+            webView.variables.currentUser = '<%=currentUser%>';
             webView.mainPage.add(document.body);
             webView.mainPage.resizeHandler();
         </script>

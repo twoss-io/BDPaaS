@@ -154,7 +154,7 @@ public class SimulateCreatePlatform extends HttpServlet {
                     
                     HttpEntity inputEntity = new ByteArrayEntity(resultObject.toString().getBytes("UTF-8"));
                     method.setEntity(inputEntity);
-                    Thread.sleep(5000);
+                    Thread.sleep(15000);
                     /*MultipartEntityBuilder reqEntityBuilder = MultipartEntityBuilder.create();        
                     reqEntityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
                     reqEntityBuilder.addTextBody("json", resultObject.toString(),  ContentType.DEFAULT_BINARY);

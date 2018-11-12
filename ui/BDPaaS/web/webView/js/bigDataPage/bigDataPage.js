@@ -110,22 +110,39 @@ bigDataPage.prototype.drawPlatformButtons=function(option){
         
         projectList[currentPlatform.projectName]["isCreating"] = currentPlatform.isCreating;
         if(currentPlatform.type == "apex"){
-            var projectNameArray = currentPlatform.projectName.toString().split("-");
+            var projectNameArray = currentPlatform.projectName.toString().split("##");
             var targetProjectName = "";
-            if(projectNameArray.length >= 4) targetProjectName = projectNameArray[2] + "-" + projectNameArray[3];
-            else targetProjectName = projectNameArray[2];
+            var originalProjectName = "";
+            if(projectNameArray.length >= 4){
+                targetProjectName = projectNameArray[2] + " (" + projectNameArray[3] + ")";
+                originalProjectName = projectNameArray[2] + "-" + projectNameArray[3];
+            }
+            else{
+                targetProjectName = projectNameArray[2];
+                originalProjectName = projectNameArray[2];
+            }
             projectList[currentPlatform.projectName]["projectName"] = targetProjectName;
+            projectList[currentPlatform.projectName]["originalProjectName"] = originalProjectName;
             projectList[currentPlatform.projectName]["fullProjectName"] = currentPlatform.projectName;
             projectList[currentPlatform.projectName]["type"] = "apex";
+            projectList[currentPlatform.projectName]["partialProjectName"] = targetProjectName.replace("(1)", "");
         }
         else if(currentPlatform.type == "spark" || currentPlatform.type == "zeppelin"){
-            var projectNameArray = currentPlatform.projectName.toString().split("-");
+            var projectNameArray = currentPlatform.projectName.toString().split("##");
             var targetProjectName = "";
-            if(projectNameArray.length >= 4) targetProjectName = projectNameArray[2] + "-" + projectNameArray[3];
-            else targetProjectName = projectNameArray[2];
+            if(projectNameArray.length >= 4){
+                targetProjectName = projectNameArray[2] + " (" + projectNameArray[3] + ")";
+                originalProjectName = projectNameArray[2] + "-" + projectNameArray[3];
+            }
+            else{
+                targetProjectName = projectNameArray[2];
+                originalProjectName = projectNameArray[2];
+            }
             projectList[currentPlatform.projectName]["projectName"] = targetProjectName;
+            projectList[currentPlatform.projectName]["originalProjectName"] = originalProjectName;
             projectList[currentPlatform.projectName]["fullProjectName"] = currentPlatform.projectName;
             projectList[currentPlatform.projectName]["type"] = "spark";
+            projectList[currentPlatform.projectName]["partialProjectName"] = targetProjectName.replace("(1)", "");
         }
     }
 
@@ -191,6 +208,9 @@ bigDataPage.prototype.drawSparkIframe=function(projectData){
             jLego.basicUI.addDiv(this.mainElement, {class: this.myClass.CONTENT_FRAME});
     this.subToolElement = 
             jLego.basicUI.addDiv(this.subIFrameContainer, {class: this.myClass.CONTENT_TOOL_FRAME});
+    var projectTitle =
+            jLego.basicUI.addDiv(this.subToolElement, {class: this.myClass.CONTENT_TOOL_TITLE});
+    $(projectTitle).text(projectData.partialProjectName);
     this.drawSparkTool(this.subToolElement, projectData);
     this.addBackButton();        
     
@@ -269,7 +289,7 @@ bigDataPage.prototype.drawDeleteProjectNotification=function(projectData){
         var parent = $(this).data('parent');
         var projectData = $(this).data('projectData');
         parent.popupPanelCTRLer.close();
-        webView.connection.deleteProjectByUser({projectName: projectData.projectName, type: projectData.type}, function(Jdata){
+        webView.connection.deleteProjectByUser({projectName: projectData.originalProjectName, type: projectData.type}, function(Jdata){
             if(Jdata.errorCode==0){
                 jLego.toastCTRLer.addSuccess({
                     title: "Deleting",
@@ -437,6 +457,9 @@ bigDataPage.prototype.drawApexIframe=function(projectData){
             jLego.basicUI.addDiv(this.mainElement, {class: this.myClass.CONTENT_FRAME});
     this.subToolElement = 
             jLego.basicUI.addDiv(this.subIFrameContainer, {class: this.myClass.CONTENT_TOOL_FRAME});
+    var projectTitle =
+            jLego.basicUI.addDiv(this.subToolElement, {class: this.myClass.CONTENT_TOOL_TITLE});
+    $(projectTitle).text(projectData.partialProjectName);
     this.addBackButton(); 
     
     this.subIFrameElement = 
@@ -488,7 +511,9 @@ bigDataPage.prototype.drawItemButton=function(target, title, buttonColor, iconUR
        $(label).css('margin-top', '15px');
        var projectNameLabel =
             jLego.basicUI.addDiv(itemButton, {id: jLego.func.getRandomString(), class: this.myClass.MENU_BUTTON_LABEL_HALF});
-       $(projectNameLabel).text(projectData.projectName);
+       //$(projectNameLabel).text(projectData.projectName);
+       $(projectNameLabel).text(projectData.partialProjectName);
+       
        if(projectData.isCreating==true){
            var loadIcon = 
                 jLego.basicUI.addImg(itemButton, {id: jLego.func.getRandomString(), class: this.myClass.MENU_LOADING_BUTTON_ICON, src: jLego.func.getImgPath({folder: "webView/img/button", name: "loadingWhite", type: "png"})}); 

@@ -84,13 +84,13 @@ public class ManualUpdatePlatform extends HttpServlet {
             ArrayList<Platform> platformListOfCurrentUser = platformDBManager.getPlatformOfUser(userID);
             HashMap<String, Platform> platformMap = new HashMap<String, Platform>();
             for(Platform platform : platformListOfCurrentUser){
-                String key = platform.getType() + "-" + platform.getProjectName();
+                String key = platform.getType() + "##" + platform.getProjectName();
                 DebugLog.info("prepare key: " + key);
                 platformMap.put(key, platform);
             }
             if(inputJSON.has(Key.DASHBOARD_URL)){
-                String key = Key.K8S_DASHBOARD + "-bdpaas-" + userID;
-                String projectName = "bdpaas-" + userID;
+                String key = Key.K8S_DASHBOARD + "##bdpaas##" + userID;
+                String projectName = "bdpaas##" + userID;
                 String inputURL = inputJSON.getString(Key.DASHBOARD_URL);
                 if(inputURL != null){
                     if(!inputURL.matches("")){
@@ -101,8 +101,8 @@ public class ManualUpdatePlatform extends HttpServlet {
                 
             }
             if(inputJSON.has(Key.GRAFANA_URL)){
-                String key = Key.GRAFANA + "-bdpaas-" + userID;
-                String projectName = "bdpaas-" + userID;
+                String key = Key.GRAFANA + "##bdpaas##" + userID;
+                String projectName = "bdpaas##" + userID;
                 String inputURL = inputJSON.getString(Key.DASHBOARD_URL);
                 if(inputURL != null){
                     if(!inputURL.matches("")){
@@ -117,10 +117,10 @@ public class ManualUpdatePlatform extends HttpServlet {
                     JSONObject currentItem = apexProjectList.getJSONObject(i);
                     String projectName = "";
                     if(currentItem.getBoolean(Key.IS_MANUAL_ADDED) == true)
-                        projectName = "bdpaas-" + userID + "-manualAddedPlatform";
+                        projectName = "bdpaas##" + userID + "##manualAddedPlatform";
                     else
-                        projectName = "bdpaas-" + userID + "-" + currentItem.getString(Key.PROJECT_NAME);
-                    String key = currentItem.getString(Key.TYPE) + "-" + projectName;
+                        projectName = "bdpaas##" + userID + "##" + currentItem.getString(Key.PROJECT_NAME);
+                    String key = currentItem.getString(Key.TYPE) + "##" + projectName;
                     String inputURL = currentItem.getString(Key.URL);
                     DebugLog.info("key: " + key);
                     if(inputURL != null){
@@ -137,10 +137,10 @@ public class ManualUpdatePlatform extends HttpServlet {
                     JSONObject currentItem = sparkProjectList.getJSONObject(i);
                     String projectName = "";
                     if(currentItem.getBoolean(Key.IS_MANUAL_ADDED) == true)
-                        projectName = "bdpaas-" + userID + "-manualAddedPlatform";
+                        projectName = "bdpaas##" + userID + "##manualAddedPlatform";
                     else
-                        projectName = "bdpaas-" + userID + "-" + currentItem.getString(Key.PROJECT_NAME);
-                    String key = currentItem.getString(Key.TYPE) + "-" + projectName;
+                        projectName = "bdpaas##" + userID + "##" + currentItem.getString(Key.PROJECT_NAME);
+                    String key = currentItem.getString(Key.TYPE) + "##" + projectName;
                     String inputURL = currentItem.getString(Key.URL);
                     DebugLog.info("key: " + key);
                     if(inputURL != null){

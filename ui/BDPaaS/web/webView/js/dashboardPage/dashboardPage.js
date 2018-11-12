@@ -137,12 +137,16 @@ dashboardPage.prototype.drawItemButton=function(target, title, buttonColor, icon
 }
 
 dashboardPage.prototype.drawDashboardIframe=function(projectData){
+    console.info(projectData)
     var dashboardPageCTRLer = this;
     if(this.subIFrameContainer != null) $(this.subIFrameContainer).remove();
     this.subIFrameContainer = 
             jLego.basicUI.addDiv(this.mainElement, {class: this.myClass.CONTENT_FRAME});
     this.subToolElement = 
             jLego.basicUI.addDiv(this.subIFrameContainer, {class: this.myClass.CONTENT_TOOL_FRAME});
+    var projectTitle =
+            jLego.basicUI.addDiv(this.subToolElement, {class: this.myClass.CONTENT_TOOL_TITLE});
+    $(projectTitle).text(projectData.user + "'s Dashboard");
     this.addBackButton();        
     var myLoading = new jLego.objectUI.nowLoading();
     myLoading.add(this.mainElement, {loadingText: "Loading.."});

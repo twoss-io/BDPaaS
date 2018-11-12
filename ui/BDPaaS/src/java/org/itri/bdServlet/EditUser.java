@@ -81,6 +81,9 @@ public class EditUser extends HttpServlet {
                 jsonResult.put(Key.ERROR_CODE, Status.NOT_LOGIN);
             }
             else{
+                DebugLog.info("################################################################################");
+                DebugLog.info("################################################################################");
+                DebugLog.info("################################################################################");
                 String targetUserID = request.getParameter(Key.USER_ID);
                 String targetUserName = request.getParameter(Key.USER_NAME);
                 String targetPassword = request.getParameter(Key.PASSWORD);
@@ -111,18 +114,33 @@ public class EditUser extends HttpServlet {
                 if(editResult==true){
                     ContainerManager containerManager = new ContainerManager();
                     ArrayList<Platform> platformListOfCurrentUser = platformDBManager.getPlatformOfUser(targetUserID);
+                    ArrayList<Platform> tempPlatformListOfCurrentUser = platformDBManager.getTempPlatformOfUser(targetUserID);
+                    DebugLog.info("tempPlatformListOfCurrentUser.length: " + tempPlatformListOfCurrentUser.size());
+                    for(Platform currentPlatform : tempPlatformListOfCurrentUser){
+                        DebugLog.info("tempPlatformListOfCurrentUser: " + currentPlatform.getProjectName());
+                        platformListOfCurrentUser.add(currentPlatform);
+                    }
                     HashMap<String, Integer> projectNameList = new HashMap<String, Integer>();
                     for(Platform currentPlatform : platformListOfCurrentUser){
                         if(currentPlatform.getType().matches(Key.SPARK) || currentPlatform.getType().matches(Key.APEX)){
-                            String[] projectNameArray =  currentPlatform.getProjectName().split("-");
-                            String basicProjectName = projectNameArray[0] + "-" + projectNameArray[1] + "-" + projectNameArray[2];
+                            String[] projectNameArray =  currentPlatform.getProjectName().split("##");
+                            String basicProjectName = projectNameArray[0] + "##" + projectNameArray[1] + "##" + projectNameArray[2];
                             Integer currentIndex = Integer.valueOf(projectNameArray[3]);
+                            DebugLog.info("-----");
+                            DebugLog.info("currentPlatform.getProjectName(): " + currentPlatform.getProjectName());
+                            DebugLog.info("basicProjectName: " + basicProjectName);
+                            DebugLog.info("currentIndex: " + currentIndex);
                             if(projectNameList.get(basicProjectName)==null){
+                                DebugLog.info("null put projectNameList: " + basicProjectName + ", " + currentIndex);
                                 projectNameList.put(basicProjectName, currentIndex);
                             }
                             else{
                                 int savedIndex = projectNameList.get(basicProjectName);
-                                if(savedIndex < currentIndex) projectNameList.put(basicProjectName, currentIndex); 
+                                DebugLog.info("savedIndex: " + savedIndex + ", currentIndex: " + currentIndex);
+                                if(savedIndex < currentIndex){
+                                    projectNameList.put(basicProjectName, currentIndex);
+                                    DebugLog.info("put projectNameList: " + basicProjectName + ", " + currentIndex);
+                                } 
                             }
                         }
                     }
@@ -130,16 +148,20 @@ public class EditUser extends HttpServlet {
                         JSONObject currentProject = targetApexProjectList.getJSONObject(i);
                         String operation = currentProject.getString(Key.OPERATION);
                         if(operation.matches(Key.ADD)){
-                            String proejctName = "bdpaas-" + targetUserID + "-" + currentProject.getString(Key.PROJECT_NAME);
+                            String proejctName = "bdpaas##" + targetUserID + "##" + currentProject.getString(Key.PROJECT_NAME);
+                            DebugLog.info("add proejctName 1: " + proejctName);
                             if(projectNameList.get(proejctName)==null){
-                                proejctName = proejctName + "-1";
+                                DebugLog.info("projectNameList proejctName null: " + proejctName);
                                 projectNameList.put(proejctName, 1);
+                                proejctName = proejctName + "##1";
                             }
                             else{
                                 int currentIndex = projectNameList.get(proejctName) + 1;
-                                proejctName = proejctName + "-" + currentIndex;
+                                DebugLog.info("projectNameList proejctName not null, currentIndex: " + currentIndex);
                                 projectNameList.put(proejctName, currentIndex);
+                                proejctName = proejctName + "##" + currentIndex;
                             }
+                            DebugLog.info("add proejctName 2: " + proejctName);
                             JSONObject createdProjectObject = new JSONObject();
                             JSONObject userObject = new JSONObject();
                             userObject.put(Key.NAME, targetUserID);
@@ -157,11 +179,11 @@ public class EditUser extends HttpServlet {
                             createdProjectObject.put(Key.PROJECT, projectObject);
                             //call api to create a new platform
                             DebugLog.info("create apex: " + createdProjectObject.toString());
-                            platformDBManager.addTempPlatform(userID, proejctName, Key.APEX, "");
+                            platformDBManager.addTempPlatform(targetUserID, proejctName, Key.APEX, "");
                             containerManager.createPlatform(createPlatformURL, createdProjectObject);
                         }
                         else if(operation.matches(Key.DELETE)){
-                            String proejctName = "bdpaas-" + targetUserID + "-" + currentProject.getString(Key.PROJECT_NAME);
+                            String proejctName = "bdpaas##" + targetUserID + "##" + currentProject.getString(Key.PROJECT_NAME);
                             JSONObject deletedProjectObject = new JSONObject();
                             JSONObject userObject = new JSONObject();
                             userObject.put(Key.NAME, targetUserID);
@@ -187,15 +209,15 @@ public class EditUser extends HttpServlet {
                         JSONObject currentProject = targetSparkProjectList.getJSONObject(i);
                         String operation = currentProject.getString(Key.OPERATION);
                         if(operation.matches(Key.ADD)){
-                            String proejctName = "bdpaas-" + targetUserID + "-" + currentProject.getString(Key.PROJECT_NAME);
+                            String proejctName = "bdpaas##" + targetUserID + "##" + currentProject.getString(Key.PROJECT_NAME);
                             DebugLog.info("spark: " + proejctName);
                             if(projectNameList.get(proejctName)==null){
-                                proejctName = proejctName + "-1";
+                                proejctName = proejctName + "##1";
                                 projectNameList.put(proejctName, 1);
                             }
                             else{
                                 int currentIndex = projectNameList.get(proejctName) + 1;
-                                proejctName = proejctName + "-" + currentIndex;
+                                proejctName = proejctName + "##" + currentIndex;
                                 projectNameList.put(proejctName, currentIndex);
                             }
                             JSONObject createdProjectObject = new JSONObject();
@@ -215,11 +237,11 @@ public class EditUser extends HttpServlet {
                             createdProjectObject.put(Key.PROJECT, projectObject);
                             //call api to create a new platform
                             DebugLog.info("create spark: " + createdProjectObject.toString());
-                            platformDBManager.addTempPlatform(userID, proejctName, Key.SPARK, "");
+                            platformDBManager.addTempPlatform(targetUserID, proejctName, Key.SPARK, "");
                             containerManager.createPlatform(createPlatformURL, createdProjectObject);
                         }
                         else if(operation.matches(Key.DELETE)){
-                            String proejctName = "bdpaas-" + targetUserID + "-" + currentProject.getString(Key.PROJECT_NAME);
+                            String proejctName = "bdpaas##" + targetUserID + "##" + currentProject.getString(Key.PROJECT_NAME);
                             JSONObject deletedProjectObject = new JSONObject();
                             JSONObject userObject = new JSONObject();
                             userObject.put(Key.NAME, targetUserID);

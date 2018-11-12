@@ -93,8 +93,9 @@ public class AddProjectByUser extends HttpServlet {
                 String createPlatformURL = System.getProperty(Key.CREATE_PLATFORM_URL, xmlCreatePlatformURL);
                 for(Platform currentPlatform : platformListOfCurrentUser){
                     if(currentPlatform.getType().matches(Key.SPARK) || currentPlatform.getType().matches(Key.APEX)){
-                        String[] projectNameArray =  currentPlatform.getProjectName().split("-");
-                        String basicProjectName = projectNameArray[0] + "-" + projectNameArray[1] + "-" + projectNameArray[2];
+                        DebugLog.info("currentPlatform.getProjectName(): " + currentPlatform.getProjectName());
+                        String[] projectNameArray =  currentPlatform.getProjectName().split("##");
+                        String basicProjectName = projectNameArray[0] + "##" + projectNameArray[1] + "##" + projectNameArray[2];
                         Integer currentIndex = Integer.valueOf(projectNameArray[3]);
                         if(projectNameList.get(basicProjectName)==null){
                             projectNameList.put(basicProjectName, currentIndex);
@@ -108,15 +109,15 @@ public class AddProjectByUser extends HttpServlet {
                 String projectType = inputJSON.getString(Key.TYPE);
                 String projectName = inputJSON.getString(Key.PROJECT_NAME);
                 if(projectNameList.get(projectName)==null){
-                    projectName = projectName + "-1";
+                    projectName = projectName + "##1";
                     projectNameList.put(projectName, 1);
                 }
                 else{
                     int currentIndex = projectNameList.get(projectName) + 1;
-                    projectName = projectName + "-" + currentIndex;
+                    projectName = projectName + "##" + currentIndex;
                     projectNameList.put(projectName, currentIndex);
                 }
-                String finalProjectName = "bdpaas-" + userID + "-" + projectName;
+                String finalProjectName = "bdpaas##" + userID + "##" + projectName;
                 JSONObject createdProjectObject = new JSONObject();
                 JSONObject userObject = new JSONObject();
                 userObject.put(Key.NAME, userID);

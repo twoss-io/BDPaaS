@@ -252,6 +252,9 @@ public class Utils {
                             else if(type.matches(Key.YARN)){
                                 tempURL =  "https://" + bdPaaSIP + ":8080/" + type + "/" + portString + "/cluster"; 
                             }
+                            else if(type.matches(Key.K8S_DASHBOARD)){
+                                tempURL =  "https://" + bdPaaSIP + ":8080/" + "dashboard" + "/" + portString + "/"; 
+                            }
                             else{
                                 tempURL =  "https://" + bdPaaSIP + ":8080/" + type + "/" + portString + "/"; 
                             }                      

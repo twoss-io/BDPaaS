@@ -11,6 +11,7 @@ webView.constants.sparkConsolePage={};
 webView.cls.sparkConsolePage.MAIN_FRAME = "common_mainFrame";
 webView.cls.sparkConsolePage.CONTENT_FRAME = "sparkConsolePage_contentFrame";
 webView.cls.sparkConsolePage.CONTENT_TOOL_FRAME = "bigDataPage_content_toolFrame";
+webView.cls.sparkConsolePage.CONTENT_TOOL_TITLE = "bigDataPage_content_toolTitle";
 webView.cls.sparkConsolePage.CONTENT_I_FRAME = "bigDataPage_content_iFrame";
 
 webView.cls.sparkConsolePage.ACTION_BUTTON_FRAME = "bigDataPage_actionButtonFrame";

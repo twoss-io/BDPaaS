@@ -23,6 +23,17 @@ and open the template in the editor.
     background-color: #666666;
 }
 
+.bigDataPage_content_toolTitle{
+    position: relative;
+    float: left;
+    width: auto;
+    heigh: 45px;
+    line-height: 45px;
+    margin-left: 60px;
+    color: white;
+    font-size: 20px;
+}
+
 .bigDataPage_content_iFrame{
     position: relative;
     float: left;

@@ -68,7 +68,9 @@ public class GetMyPlatforms extends HttpServlet {
                         if(authority == ServletConfig.AUTHORITY_ADMIN){
                             platformJSON.put(Key.TYPE, currentPlatform.getType());
                             //platformJSON.put(Key.URL, currentPlatform.getURL());
-                            String tempURL = Utils.getConvertedIP(request, currentPlatform.getURL());
+                            //String tempURL = Utils.getConvertedIP(request, currentPlatform.getURL());
+                            String tempURL = currentPlatform.getURL();
+                            tempURL = Utils.getConvertedURL(request, currentPlatform.getType(), currentPlatform.getURL());
                             platformJSON.put(Key.URL, tempURL);
                             platformJSON.put(Key.PROJECT_NAME, currentPlatform.getProjectName());
                             jsonResult.put(Key.K8S_DASHBOARD, currentPlatform.getURL());

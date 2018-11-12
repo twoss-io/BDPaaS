@@ -72,7 +72,9 @@ public class GetAllDashboards extends HttpServlet {
                     platformJSON.put(Key.PROJECT_NAME, currentPlatform.getProjectName());
                     platformJSON.put(Key.USER, currentPlatform.getUserID());
                     //jsonResult.put(Key.K8S_DASHBOARD, currentPlatform.getURL()); 
-                    String tempURL = Utils.getConvertedIP(request, currentPlatform.getURL());
+                    //String tempURL = Utils.getConvertedIP(request, currentPlatform.getURL());
+                    String tempURL = currentPlatform.getURL();
+                    tempURL = Utils.getConvertedURL(request, currentPlatform.getType(), currentPlatform.getURL());
                     platformJSON.put(Key.URL, tempURL);
                     jsonResult.put(Key.K8S_DASHBOARD, tempURL);
                     platformJSONList.put(platformJSON);

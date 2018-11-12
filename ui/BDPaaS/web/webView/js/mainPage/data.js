@@ -11,5 +11,7 @@ webView.cls.mainPage.MAIN_FRAME = "mainPage_mainFrame";
 webView.cls.mainPage.TOP_BANNER_FRAME = "mainPage_topBannerFrame";
 webView.cls.mainPage.CONTENT_FRAME = "mainPage_contentFrame";
 
+webView.cls.mainPage.USER_TAG = "mainPage_userTag";
+
 
 

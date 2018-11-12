@@ -21,6 +21,8 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.itri.bdServlet.SimulateCreatePlatform;
+import org.itri.data.Key;
+import org.itri.utils.DebugLog;
 
 /**
  *
@@ -35,6 +37,16 @@ public class ContainerManager {
         Thread t = new Thread(new Runnable() {
             public void run() {
                 try {
+                    DebugLog.info("======createPlatform=======");
+                    DebugLog.info(servletURL);
+                    JSONObject projectJSON = requestJSON.getJSONObject(Key.PROJECT);
+                    String projectName = projectJSON.getString(Key.NAME);
+                    DebugLog.info(requestJSON.toString());
+                    DebugLog.info(projectName);
+                    projectName = projectName.replaceAll("##", "-");
+                    DebugLog.info(projectName);
+                    projectJSON.put(Key.NAME, projectName);
+                    DebugLog.info(requestJSON.toString());
                     HttpPost method = new HttpPost(servletURL);
                     method.setHeader("Accept", "application/json");
                     method.setHeader("Content-type", "application/json");
@@ -66,6 +78,8 @@ public class ContainerManager {
 
                 } catch (IOException ex) {
                     Logger.getLogger(SimulateCreatePlatform.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (JSONException ex) {
+                    Logger.getLogger(ContainerManager.class.getName()).log(Level.SEVERE, null, ex);
                 } 
             }
         });
@@ -76,9 +90,16 @@ public class ContainerManager {
         Thread t = new Thread(new Runnable() {
             public void run() {
                 try {
+                    DebugLog.info("======deletePlatform=======");
+                    DebugLog.info(servletURL);
                     HttpPost method = new HttpPost(servletURL);
                     method.setHeader("Accept", "application/json");
                     method.setHeader("Content-type", "application/json");
+                    JSONObject projectJSON = requestJSON.getJSONObject(Key.PROJECT);
+                    String projectName = projectJSON.getString(Key.NAME);
+                    projectName = projectName.replaceAll("##", "-");
+                    projectJSON.put(Key.NAME, projectName);
+                    DebugLog.info(requestJSON.toString());
                     HttpEntity inputEntity = new ByteArrayEntity(requestJSON.toString().getBytes("UTF-8"));
                     method.setEntity(inputEntity);
                     /*MultipartEntityBuilder reqEntityBuilder = MultipartEntityBuilder.create();        
@@ -107,6 +128,8 @@ public class ContainerManager {
 
                 } catch (IOException ex) {
                     Logger.getLogger(SimulateCreatePlatform.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (JSONException ex) {
+                    Logger.getLogger(ContainerManager.class.getName()).log(Level.SEVERE, null, ex);
                 } 
             }
         });

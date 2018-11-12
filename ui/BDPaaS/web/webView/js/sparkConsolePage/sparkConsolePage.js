@@ -80,11 +80,12 @@ sparkConsolePage.prototype.drawSparkConsoleButtons=function(option){
     var itemList = [];
     for(var i=0; i<option.platformList.length; i++){
         var currentProject = option.platformList[i];
-        var projectNameArray = currentProject.projectName.toString().split("-");
+        var projectNameArray = currentProject.projectName.toString().split("##");
         var targetProjectName = "";
-        if(projectNameArray.length >= 4) targetProjectName = projectNameArray[2] + "-" + projectNameArray[3];
+        if(projectNameArray.length >= 4) targetProjectName = projectNameArray[2] + " (" + projectNameArray[3] + ")";
         else targetProjectName = projectNameArray[2];
-        currentProject.partialProjectName = targetProjectName;
+        if(targetProjectName != null) currentProject.partialProjectName = targetProjectName.replace("(1)", "");
+        //currentProject.partialProjectName = targetProjectName;
         var dashboardItemButton = this.drawItemButton(platformButtonFrame, currentProject.user, "#e1691a", jLego.func.getImgPath({folder: "webView/img/button", name: "spark", type: "png"}), currentProject);
         $(dashboardItemButton).data('parent', this);
         $(dashboardItemButton).data('projectData', currentProject);
@@ -155,6 +156,9 @@ sparkConsolePage.prototype.drawIframe=function(projectData){
             jLego.basicUI.addDiv(this.mainElement, {class: this.myClass.CONTENT_FRAME});
     this.subToolElement = 
             jLego.basicUI.addDiv(this.subIFrameContainer, {class: this.myClass.CONTENT_TOOL_FRAME});
+    var projectTitle =
+            jLego.basicUI.addDiv(this.subToolElement, {class: this.myClass.CONTENT_TOOL_TITLE});
+    $(projectTitle).text(projectData.partialProjectName);
     this.addBackButton();        
     var myLoading = new jLego.objectUI.nowLoading();
     myLoading.add(this.mainElement, {loadingText: "Loading.."});

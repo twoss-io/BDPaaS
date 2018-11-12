@@ -496,14 +496,14 @@ userPage.prototype.drawEditUserForm=function(userID, currentUserName, currentPas
     for(var i=0; i<currentPlatforms.length; i++){
         var currentPlatform = currentPlatforms[i];
         if(currentPlatform.type=="apex"){
-            var projectNameKeyList = currentPlatform.projectName.toString().split("-");
-            if(projectNameKeyList.length >= 4) var projectName = projectNameKeyList[2] + "-" + projectNameKeyList[3];
+            var projectNameKeyList = currentPlatform.projectName.toString().split("##");
+            if(projectNameKeyList.length >= 4) var projectName = projectNameKeyList[2] + " (" + projectNameKeyList[3] +")";
             else var projectName = projectNameKeyList[2];
             apexItemList[apexItemList.length] = this.addApexProjectInputField(optionListCTRLer, contentFrame, projectName, false);
         }
         else if(currentPlatform.type=="spark"){
-            var projectNameKeyList = currentPlatform.projectName.toString().split("-");
-            if(projectNameKeyList.length >= 4) var projectName = projectNameKeyList[2] + "-" + projectNameKeyList[3];
+            var projectNameKeyList = currentPlatform.projectName.toString().split("##");
+            if(projectNameKeyList.length >= 4) var projectName = projectNameKeyList[2] + " (" + projectNameKeyList[3] +")";
             else var projectName = projectNameKeyList[2];
             sparkItemList[sparkItemList.length] = this.addSparkProjectInputField(optionListCTRLer, contentFrame, projectName, false);
         }
@@ -664,6 +664,8 @@ userPage.prototype.drawEditUserForm=function(userID, currentUserName, currentPas
                     var projectName = optionListCTRLer.getValue(currentItem);
                     if(projectName!=null){
                         if(projectName.toString().replace(" ", "") != ""){
+                            projectName = projectName.replace(")", "");
+                            projectName = projectName.replace(" (", "##");
                             var newProject = {
                                 projectName: projectName,
                                 type: "apex",
@@ -696,6 +698,8 @@ userPage.prototype.drawEditUserForm=function(userID, currentUserName, currentPas
                     var projectName = optionListCTRLer.getValue(currentItem);
                     if(projectName!=null){
                         if(projectName.toString().replace(" ", "") != ""){
+                            projectName = projectName.replace(")", "");
+                            projectName = projectName.replace(" (", "##");
                             var newProject = {
                                 projectName: projectName,
                                 type: "spark",
@@ -890,8 +894,8 @@ userPage.prototype.drawManualEditPlatformForm=function(userID, currentPlatforms)
     for(var i=0; i<currentPlatforms.length; i++){
         var currentPlatform = currentPlatforms[i];
         if(currentPlatform.type=="apex"){
-            var projectNameKeyList = currentPlatform.projectName.toString().split("-");
-            if(projectNameKeyList.length >= 4) var projectName = projectNameKeyList[2] + "-" + projectNameKeyList[3];
+            var projectNameKeyList = currentPlatform.projectName.toString().split("##");
+            if(projectNameKeyList.length >= 4) var projectName = projectNameKeyList[2] + " (" + projectNameKeyList[3] +")";
             else var projectName = projectNameKeyList[2];
             apexLabelList[apexLabelList.length] = optionListCTRLer.add(contentFrame, {
                 title: "Apex Project",
@@ -965,8 +969,8 @@ userPage.prototype.drawManualEditPlatformForm=function(userID, currentPlatforms)
             });
         }
         else if(currentPlatform.type=="spark"){
-            var projectNameKeyList = currentPlatform.projectName.toString().split("-");
-            if(projectNameKeyList.length >= 4) var projectName = projectNameKeyList[2] + "-" + projectNameKeyList[3];
+            var projectNameKeyList = currentPlatform.projectName.toString().split("##");
+            if(projectNameKeyList.length >= 4) var projectName = projectNameKeyList[2] + " (" + projectNameKeyList[3] +")";
             else var projectName = projectNameKeyList[2];
             sparkLabelList[sparkLabelList.length] = optionListCTRLer.add(contentFrame, {
                 title: "Spark Project",
@@ -1059,6 +1063,8 @@ userPage.prototype.drawManualEditPlatformForm=function(userID, currentPlatforms)
             var projectName = optionListCTRLer.getValue(currentProjectItem);
             var currentItem = apexItemList[i];
             var url = optionListCTRLer.getValue(currentItem);
+            projectName = projectName.replace(")", "");
+            projectName = projectName.replace(" (", "##");
             var newProject = {
                 isManualAdded: !hasApexFlag,
                 projectName: projectName,
@@ -1073,6 +1079,8 @@ userPage.prototype.drawManualEditPlatformForm=function(userID, currentPlatforms)
             var projectName = optionListCTRLer.getValue(currentProjectItem);
             var currentItem = hadoopItemList[i];
             var url = optionListCTRLer.getValue(currentItem);
+            projectName = projectName.replace(")", "");
+            projectName = projectName.replace(" (", "##");
             var newProject = {
                 isManualAdded: !hasApexFlag,
                 projectName: projectName,
@@ -1087,6 +1095,8 @@ userPage.prototype.drawManualEditPlatformForm=function(userID, currentPlatforms)
             var projectName = optionListCTRLer.getValue(currentProjectItem);
             var currentItem = yarnItemList[i];
             var url = optionListCTRLer.getValue(currentItem);
+            projectName = projectName.replace(")", "");
+            projectName = projectName.replace(" (", "##");
             var newProject = {
                 isManualAdded: !hasApexFlag,
                 projectName: projectName,
@@ -1102,6 +1112,8 @@ userPage.prototype.drawManualEditPlatformForm=function(userID, currentPlatforms)
             var projectName = optionListCTRLer.getValue(currentProjectItem);
             var currentItem = sparkItemList[i];
             var url = optionListCTRLer.getValue(currentItem);
+            projectName = projectName.replace(")", "");
+            projectName = projectName.replace(" (", "##");
             var newProject = {
                 isManualAdded: !hasSparkFlag,
                 projectName: projectName,
@@ -1116,6 +1128,8 @@ userPage.prototype.drawManualEditPlatformForm=function(userID, currentPlatforms)
             var projectName = optionListCTRLer.getValue(currentProjectItem);
             var currentItem = zeppelinItemList[i];
             var url = optionListCTRLer.getValue(currentItem);
+            projectName = projectName.replace(")", "");
+            projectName = projectName.replace(" (", "##");
             var newProject = {
                 isManualAdded: !hasSparkFlag,
                 projectName: projectName,
@@ -1174,12 +1188,16 @@ userPage.prototype.setupInputTextOnly=function(element){
     $(element).data('currentValue', $(element).val());
     $(element).keydown(function (e) {
         var txt = String.fromCharCode(e.which);
-        if(e.which==8 || e.which == 37 || e.which == 39 || e.which == 46|| e.which == 36){
+        if(e.which==8 || e.which == 37 || e.which == 39 || e.which == 46 || e.which == 36){
             
+        }
+        else if(e.key == "#" || e.key == "(" || e.key == ")" || e.key == "-"){
+            return false;
         }
         else if(!txt.match(/[A-Za-z0-9+#.]/)) {
             return false;
         }
+        
     });
 }
 

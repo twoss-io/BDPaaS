@@ -91,7 +91,7 @@ public class DeleteProjectByUser extends HttpServlet {
                 String createPlatformURL = System.getProperty(Key.CREATE_PLATFORM_URL, xmlCreatePlatformURL);
                 String projectType = inputJSON.getString(Key.TYPE);
                 String projectName = inputJSON.getString(Key.PROJECT_NAME);
-                String proejctName = "bdpaas-" + userID + "-" + projectName;
+                String proejctName = "bdpaas##" + userID + "##" + projectName;
                 JSONObject deletedProjectObject = new JSONObject();
                 JSONObject userObject = new JSONObject();
                 userObject.put(Key.NAME, userID);
